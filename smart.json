@@ -3,7 +3,7 @@
     "description": "in-place edit package influenced by x-editable",
     "homepage": "http://meteor-editable.meteor.com/",
     "author": "Dave Ramsey <grokbot.dwr@gmail.com>",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "git": "https://github.com/grokbot/semantic-editable.git",
     "packages": { }
 }
