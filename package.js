@@ -24,6 +24,7 @@ Package.on_use(function (api) {
 
     // main files
     api.add_files([
+        'semantic.css',
         'bootstrap-editable.css',
         'editable.html',
         'editable.js'
