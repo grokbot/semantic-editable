@@ -89,7 +89,7 @@ s_editable.events({
             if (self.async) {
                 tmpl.Session.set('loading', true);
                 this.onsubmit.call(this, val, function () {
-                    tmpl.$('.s_editable-popup').trigger('hide');
+                    tmpl.$('.s_editable-popup').hide();
                     doSavedTransition(tmpl);
                 });
                 return;
@@ -98,11 +98,11 @@ s_editable.events({
         } else {
             tmpl.$('.editable-click').text(val);
         }
-        tmpl.$('.s_editable-popup').trigger('hide');
+        tmpl.$('.s_editable-popup').hide();
         doSavedTransition(tmpl);
     },
     'click .editable-cancel': function (e, tmpl) {
-        tmpl.$('.s_editable-popup').trigger('hide');
+        tmpl.$('.s_editable-popup').hide();
     },
     'submit .editableform': function (e) {
         e.preventDefault();
