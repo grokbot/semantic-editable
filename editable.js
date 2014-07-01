@@ -39,8 +39,7 @@ Template.s_editable.helpers({ 'settings': function () { return generateSettings(
 
 s_editable.helpers({
     's_editable_template': function () {
-        var template = typeof this.template === 'string' ? Template[this.template] : this.template;
-        return this.disabled ? this.disabledTemplate : template;
+        return this.disabled ? this.disabledTemplate : this.template;
     },
     'displayVal': function () {
         var v = valueToText(this.value, this.source) || this.emptyText;
@@ -57,7 +56,7 @@ s_editable.helpers({
     },
     'value':         function () { return valueToText(this.value, this.source) || this.emptyText; },
     'extraClasses': function () {
-        var type = sEditable._types.findOne({ _id: this.type });
+        var type = mEditable._types.findOne({ _id: this.type });
         if (type && type.classes) {
             return type.classes.join(' ');
         }
@@ -69,7 +68,7 @@ s_editable.helpers({
         }
         return !v.toString().trim() ? 'editable-empty' : '';
     },
-    'inputTemplate': function () { return sEditable.getTemplate(this.type); }
+    'inputTemplate': function () { return mEditable.getTemplate(this.type); }
 //     can't get tmpl in this context else I'd do this:
 //    'loading': function (a,b) {
 //        return tmpl.Session.get('loading');
@@ -83,13 +82,13 @@ s_editable.events({
     'submit': function (e, tmpl) {
         var self = this;
 
-        var val = sEditable.getVal(this.type)(tmpl.$('.editable-input'));
+        var val = mEditable.getVal(this.type)(tmpl.$('.editable-input'));
 
         if (typeof self.onsubmit === 'function') {
             if (self.async) {
                 tmpl.Session.set('loading', true);
                 this.onsubmit.call(this, val, function () {
-                    tmpl.$('.s_editable-popup').hide();
+                    tmpl.$('.s_editable-popup').trigger('hide');
                     doSavedTransition(tmpl);
                 });
                 return;
@@ -98,11 +97,11 @@ s_editable.events({
         } else {
             tmpl.$('.editable-click').text(val);
         }
-        tmpl.$('.s_editable-popup').hide();
+        tmpl.$('.s_editable-popup').trigger('hide');
         doSavedTransition(tmpl);
     },
     'click .editable-cancel': function (e, tmpl) {
-        tmpl.$('.s_editable-popup').hide();
+        tmpl.$('.s_editable-popup').trigger('hide');
     },
     'submit .editableform': function (e) {
         e.preventDefault();
@@ -173,18 +172,26 @@ s_editable.rendered = function () {
         }
 
         if (visible) {
-            $popover.show();
+            $popover.trigger('show');
             $popover.fadeIn();
             resizePopover($popover, self.data.position);
         } else {
-            $popover.hide();
+            $popover.trigger('hide');
             $popover.fadeOut();
         }
     });
 };
 
 function resizePopover ($popover, placement) {
-    
+    var actualWidth = $popover[0].offsetWidth,
+        actualHeight = $popover[0].offsetHeight,
+        pos = $.fn.tooltip.Constructor.prototype.getPosition.call({ $element: $popover.prevAll('.editable-click:first') });
+    var calculatedOffset = $.fn.tooltip.Constructor.prototype.getCalculatedOffset(placement, pos, actualWidth, actualHeight);
+
+    $.fn.tooltip.Constructor.prototype.applyPlacement.call({
+        tip: function () { return $popover; },
+        replaceArrow: function (delta, dimension, position) { $popover.find('.arrow').css(position, delta ? (50 * (1 - delta / dimension) + '%') : ''); }
+    }, calculatedOffset, placement);
 }
 
 Meteor.startup(function () {
@@ -224,7 +231,7 @@ function valueToText(val, source) {
 function generateSettings (settings) {
     if (POSSIBLE_POSITIONS.indexOf(settings.position) == -1)
         delete settings.position;
-    if (!sEditable._types.findOne({_id: settings.type }))
+    if (!mEditable._types.findOne({_id: settings.type }))
         delete settings.type;
 
     if (settings.source)
