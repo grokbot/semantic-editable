@@ -173,11 +173,11 @@ s_editable.rendered = function () {
         }
 
         if (visible) {
-            $popover.trigger('show');
+            $popover.show());
             $popover.fadeIn();
             resizePopover($popover, self.data.position);
         } else {
-            $popover.trigger('hide');
+            $popover.hide();
             $popover.fadeOut();
         }
     });
