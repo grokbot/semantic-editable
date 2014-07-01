@@ -173,7 +173,7 @@ s_editable.rendered = function () {
         }
 
         if (visible) {
-            $popover.show());
+            $popover.show();
             $popover.fadeIn();
             resizePopover($popover, self.data.position);
         } else {
