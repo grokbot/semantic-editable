@@ -1,4 +1,4 @@
-mEditable = {
+sEditable = {
     _types: new Meteor.Collection(null),
     getTemplate: function (type) {
         var t = this._types.findOne({_id: type });
@@ -33,12 +33,12 @@ mEditable = {
     }
 };
 
-var m_editable = Template['m_editable_main'];
+var s_editable = Template['s_editable_main'];
 var POSSIBLE_POSITIONS = ['left', 'right', 'top', 'bottom'];
-Template.m_editable.helpers({ 'settings': function () { return generateSettings(this); } });
+Template.s_editable.helpers({ 'settings': function () { return generateSettings(this); } });
 
-m_editable.helpers({
-    'm_editable_template': function () {
+s_editable.helpers({
+    's_editable_template': function () {
         var template = typeof this.template === 'string' ? Template[this.template] : this.template;
         return this.disabled ? this.disabledTemplate : template;
     },
@@ -53,11 +53,11 @@ m_editable.helpers({
         return v || this.emptyText;
     },
     'resetForm': function () {
-        return Session.get('m_editable.resetForm');
+        return Session.get('s_editable.resetForm');
     },
     'value':         function () { return valueToText(this.value, this.source) || this.emptyText; },
     'extraClasses': function () {
-        var type = mEditable._types.findOne({ _id: this.type });
+        var type = sEditable._types.findOne({ _id: this.type });
         if (type && type.classes) {
             return type.classes.join(' ');
         }
@@ -69,27 +69,27 @@ m_editable.helpers({
         }
         return !v.toString().trim() ? 'editable-empty' : '';
     },
-    'inputTemplate': function () { return mEditable.getTemplate(this.type); }
+    'inputTemplate': function () { return sEditable.getTemplate(this.type); }
 //     can't get tmpl in this context else I'd do this:
 //    'loading': function (a,b) {
 //        return tmpl.Session.get('loading');
 //    }
 });
 
-m_editable.events({
+s_editable.events({
     'resize .editable-container': function (e, tmpl) {
-        resizePopover(tmpl.$('.m_editable-popup'), this.position);
+        resizePopover(tmpl.$('.s_editable-popup'), this.position);
     },
     'submit': function (e, tmpl) {
         var self = this;
 
-        var val = mEditable.getVal(this.type)(tmpl.$('.editable-input'));
+        var val = sEditable.getVal(this.type)(tmpl.$('.editable-input'));
 
         if (typeof self.onsubmit === 'function') {
             if (self.async) {
                 tmpl.Session.set('loading', true);
                 this.onsubmit.call(this, val, function () {
-                    tmpl.$('.m_editable-popup').trigger('hide');
+                    tmpl.$('.s_editable-popup').trigger('hide');
                     doSavedTransition(tmpl);
                 });
                 return;
@@ -98,31 +98,31 @@ m_editable.events({
         } else {
             tmpl.$('.editable-click').text(val);
         }
-        tmpl.$('.m_editable-popup').trigger('hide');
+        tmpl.$('.s_editable-popup').trigger('hide');
         doSavedTransition(tmpl);
     },
     'click .editable-cancel': function (e, tmpl) {
-        tmpl.$('.m_editable-popup').trigger('hide');
+        tmpl.$('.s_editable-popup').trigger('hide');
     },
     'submit .editableform': function (e) {
         e.preventDefault();
     },
     'click .editable-click': function (e, tmpl) {
-        tmpl.$('.m_editable-popup').trigger(!tmpl.Session.get('popover-visible') ? 'show' : 'hide');
+        tmpl.$('.s_editable-popup').trigger(!tmpl.Session.get('popover-visible') ? 'show' : 'hide');
     },
-    'hidden .m_editable-popup': function (e, tmpl) {
+    'hidden .s_editable-popup': function (e, tmpl) {
         tmpl.Session.set('loading', false);
 
         // hack to reset form
-        Session.set('m_editable.resetForm', true);
+        Session.set('s_editable.resetForm', true);
         setTimeout(function () {
-            Session.set('m_editable.resetForm', false);
+            Session.set('s_editable.resetForm', false);
         }, 10);
     },
-    'shown .m_editable-popup': function (e, tmpl) {
+    'shown .s_editable-popup': function (e, tmpl) {
         tmpl.$('.editable-focus').first().focus();
     },
-    'hide .m_editable-popup': function (e, tmpl) {
+    'hide .s_editable-popup': function (e, tmpl) {
         if (tmpl.Session.equals('popover-visible', false)) {
             e.stopImmediatePropagation();
             return;
@@ -134,7 +134,7 @@ m_editable.events({
             $(e.target).trigger('hidden');
         }, 325); // 325 seems to be the magic number (for my desktop at least) so the user doesn't see the form show up again
     },
-    'show .m_editable-popup': function (e, tmpl) {
+    'show .s_editable-popup': function (e, tmpl) {
         if (tmpl.Session.equals('popover-visible', true)) {
             e.stopImmediatePropagation();
             return;
@@ -146,9 +146,9 @@ m_editable.events({
     }
 });
 
-m_editable.rendered = function () {
+s_editable.rendered = function () {
     var self = this;
-    var $popover = self.$('.m_editable-popup');
+    var $popover = self.$('.s_editable-popup');
 
     self.Deps.autorun(function () {
         var loading = self.Session.get('loading');
@@ -184,25 +184,17 @@ m_editable.rendered = function () {
 };
 
 function resizePopover ($popover, placement) {
-    var actualWidth = $popover[0].offsetWidth,
-        actualHeight = $popover[0].offsetHeight,
-        pos = $.fn.tooltip.Constructor.prototype.getPosition.call({ $element: $popover.prevAll('.editable-click:first') });
-    var calculatedOffset = $.fn.tooltip.Constructor.prototype.getCalculatedOffset(placement, pos, actualWidth, actualHeight);
-
-    $.fn.tooltip.Constructor.prototype.applyPlacement.call({
-        tip: function () { return $popover; },
-        replaceArrow: function (delta, dimension, position) { $popover.find('.arrow').css(position, delta ? (50 * (1 - delta / dimension) + '%') : ''); }
-    }, calculatedOffset, placement);
+    
 }
 
 Meteor.startup(function () {
-    $(document).on('click.m_editable-popover-close', function (e) {
-        $('.m_editable-popup:visible').each(function () {
+    $(document).on('click.s_editable-popover-close', function (e) {
+        $('.s_editable-popup:visible').each(function () {
             var $popover = $(this);
             if (!$popover.is(e.target) &&
-                !$popover.siblings('.m_editable-popup-handle').is(e.target) &&
+                !$popover.siblings('.s_editable-popup-handle').is(e.target) &&
                 $popover.has(e.target).length === 0 &&
-                $popover.siblings('.m_editable-popup-handle').has(e.target).length === 0) {
+                $popover.siblings('.s_editable-popup-handle').has(e.target).length === 0) {
                 $popover.trigger('hide');
             }
         });
@@ -232,14 +224,14 @@ function valueToText(val, source) {
 function generateSettings (settings) {
     if (POSSIBLE_POSITIONS.indexOf(settings.position) == -1)
         delete settings.position;
-    if (!mEditable._types.findOne({_id: settings.type }))
+    if (!sEditable._types.findOne({_id: settings.type }))
         delete settings.type;
 
     if (settings.source)
         settings.source = _.map(settings.source, function (op) { return typeof op === 'object' ? op : { value: op, text: op }; });
     return _.extend({
-        template: Template.m_editable_handle_atag,
-        disabledTemplate: Template.m_editable_handle_disabled,
+        template: Template.s_editable_handle_atag,
+        disabledTemplate: Template.s_editable_handle_disabled,
         type: 'text',
         emptyText: 'Empty',
         async: false,
@@ -270,8 +262,8 @@ function doSavedTransition (tmpl) {
 }
 
 // Session & Deps stuff
-m_editable.destroyed = function () { this.Session.destroyAll(); this.Deps.stopAll(); };
-m_editable.created = function () {
+s_editable.destroyed = function () { this.Session.destroyAll(); this.Deps.stopAll(); };
+s_editable.created = function () {
     var self = this;
 
     self.Deps = {

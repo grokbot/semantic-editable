@@ -11,9 +11,9 @@ var types = [
 ];
 
 _.each(types, function (t) {
-    mEditable.addType({
+    sEditable.addType({
         type: t,
-        template: Template.m_editable_form_text,
+        template: Template.s_editable_form_text,
         getVal: function ($inputWrapper) {
             if (t === 'number')
                 return Number($inputWrapper.find('input').val());
@@ -23,19 +23,19 @@ _.each(types, function (t) {
     });
 });
 
-Template.m_editable_form_text.events({
+Template.s_editable_form_text.events({
     'input input[type="range"]': function (e, tmpl) {
         tmpl.$('.output').text(tmpl.$(e.target).val());
     }
 });
-Template.m_editable_form_text.helpers({
+Template.s_editable_form_text.helpers({
     'hasOutput':        function () { return this.type === 'range'; },
     'formControlClass': function () { return this.type !== 'range' ? 'form-control' : 'input-medium'; }
 });
 
 /*
- Template.m_editable_form_text.destroyed = function () { this.Session.destroyAll(); this.Deps.stopAll(); };
- Template.m_editable_form_text.created = function () {
+ Template.s_editable_form_text.destroyed = function () { this.Session.destroyAll(); this.Deps.stopAll(); };
+ Template.s_editable_form_text.created = function () {
     var self = this;
 
     self.Deps = {

@@ -1,12 +1,12 @@
-mEditable.addType({
+sEditable.addType({
     type: 'datetime',
-    template: Template.m_editable_form_datetime,
+    template: Template.s_editable_form_datetime,
     getVal: function ($inputWrapper) {
         return $inputWrapper.find('div.editable-date').datetimepicker('getDate');
     }
 });
 
-Template.m_editable_form_datetime.helpers({
+Template.s_editable_form_datetime.helpers({
     'value': function () {
         var val = this.value;
         var rand = Random.id();
@@ -27,7 +27,7 @@ Template.m_editable_form_datetime.helpers({
     }
 });
 
-Template.m_editable_form_datetime.events({
+Template.s_editable_form_datetime.events({
     'show': function (e) {
         e.stopImmediatePropagation();
     },
@@ -44,7 +44,7 @@ Template.m_editable_form_datetime.events({
     }
 });
 
-Template.m_editable_form_datetime.rendered = function () {
+Template.s_editable_form_datetime.rendered = function () {
     initializeDatetimepicker(this.$('div.editable-date'));
 };
 

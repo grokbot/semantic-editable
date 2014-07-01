@@ -1,20 +1,20 @@
-<template name="m_editable">
+<template name="s_editable">
     {{#with settings}}
-        {{> m_editable_main}}
+        {{> s_editable_main}}
     {{/with}}
 </template>
 
-<template name="m_editable_handle_atag">
+<template name="s_editable_handle_atag">
     <a href="#" class="editable editable-click {{editableEmpty}} {{extraClasses}}">{{displayVal}}</a>
 </template>
 
-<template name="m_editable_handle_disabled">
+<template name="s_editable_handle_disabled">
     <span>{{displayVal}}</span>
 </template>
 
 
-<template name="m_editable_main">
-    {{> m_editable_template
+<template name="s_editable_main">
+    {{> s_editable_template
         template=template
         disabledTemplate=disabledTemplate
         disabled=disabled
@@ -23,7 +23,7 @@
         handle=handle
         extraClasses=extraClasses
     }}
-    <div class="popover {{position}} editable-popup m_editable-popup editable-container">
+    <div class="ui popup {{position}} editable-popup s_editable-popup editable-container">
         <div class="arrow"></div>
         {{#if title}}
             <h3 class="popover-title">{{title}}</h3>
@@ -43,11 +43,11 @@
 
                                 {{#if showbuttons}}
                                     <div class="editable-buttons">
-                                        <button type="submit" class="btn btn-primary btn-sm editable-submit">
-                                            <i class="glyphicon glyphicon-ok"></i>
+                                        <button type="submit" class="editable-submit">
+                                            <i class="icon check"></i>
                                         </button>
-                                        <button type="button" class="btn btn-default btn-sm editable-cancel">
-                                            <i class="glyphicon glyphicon-remove"></i>
+                                        <button type="button" class="editable-cancel">
+                                            <i class="icon delete"></i>
                                         </button>
                                     </div>
                                 {{/if}}

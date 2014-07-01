@@ -1,5 +1,5 @@
 Package.describe({
-    summary: "Meteor-Editable - in-place edit package influenced by x-editable"
+    summary: "Semantic-Editable - in-place edit package influenced by x-editable"
 });
 
 Package.on_use(function (api) {
