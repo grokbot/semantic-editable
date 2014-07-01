@@ -1,12 +1,12 @@
-mEditable.addType({
+sEditable.addType({
     type: 'date',
-    template: Template.m_editable_form_date,
+    template: Template.s_editable_form_date,
     getVal: function ($inputWrapper) {
         return $inputWrapper.find('div.editable-date').datepicker('getDate');
     }
 });
 
-Template.m_editable_form_date.helpers({
+Template.s_editable_form_date.helpers({
     'value': function () {
         var val = this.value;
         var rand = Random.id();
@@ -24,7 +24,7 @@ Template.m_editable_form_date.helpers({
     }
 });
 
-Template.m_editable_form_date.events({
+Template.s_editable_form_date.events({
     'show': function (e) {
         e.stopImmediatePropagation();
     },
@@ -41,7 +41,7 @@ Template.m_editable_form_date.events({
     }
 });
 
-Template.m_editable_form_date.rendered = function () {
+Template.s_editable_form_date.rendered = function () {
     var self = this;
     initializeDatepicker(self.$('div.editable-date'))
         // for some reason, the click events aren't being registered as inside the popover and causing

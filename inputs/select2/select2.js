@@ -1,20 +1,20 @@
-mEditable.addType({
+sEditable.addType({
     type: 'select2',
-    template: Template.m_editable_form_select2,
+    template: Template.s_editable_form_select2,
     getVal: function ($inputWrapper) {
         return $inputWrapper.find('div').select2('val');
     }
 });
 
-Template.m_editable_form_select2.events({
+Template.s_editable_form_select2.events({
     'on-update .select2-editable': function () {},    // just used to make the template data reactive in rendered
     'change .select2-editable': function (e) {
         $(e.target).parents('.editable-container').trigger('resize');
     }
 });
 
-Template.m_editable_form_select2.destroyed = function () { if (this.dep) this.dep.stop(); };
-Template.m_editable_form_select2.rendered = function () {
+Template.s_editable_form_select2.destroyed = function () { if (this.dep) this.dep.stop(); };
+Template.s_editable_form_select2.rendered = function () {
     var self = this;
     if (self.dep) self.dep.stop();
     self.dep = Deps.autorun(function () {

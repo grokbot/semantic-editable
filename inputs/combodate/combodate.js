@@ -1,17 +1,17 @@
-mEditable.addType({
+sEditable.addType({
     type: 'combodate',
-    template: Template.m_editable_form_combodate,
+    template: Template.s_editable_form_combodate,
     getVal: function ($inputWrapper) {
         return $inputWrapper.find('.combodate-editable').combodate('getValue');
     }
 });
 
-Template.m_editable_form_combodate.events({
+Template.s_editable_form_combodate.events({
     'on-update .combodate-editable': function () {}    // just used to make the template data reactive in rendered
 });
 
-Template.m_editable_form_combodate.destroyed = function () { if (this.dep) this.dep.stop(); };
-Template.m_editable_form_combodate.rendered = function () {
+Template.s_editable_form_combodate.destroyed = function () { if (this.dep) this.dep.stop(); };
+Template.s_editable_form_combodate.rendered = function () {
     var self = this;
     if (self.dep) self.dep.stop();
     self.dep = Deps.autorun(function () {

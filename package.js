@@ -1,5 +1,5 @@
 Package.describe({
-    summary: "Meteor-Editable - in-place edit package influenced by x-editable"
+    summary: "Semantic-Editable - in-place edit package influenced by x-editable"
 });
 
 Package.on_use(function (api) {
@@ -24,6 +24,7 @@ Package.on_use(function (api) {
 
     // main files
     api.add_files([
+        'semantic.css',
         'bootstrap-editable.css',
         'editable.html',
         'editable.js'
@@ -58,6 +59,4 @@ Package.on_use(function (api) {
         'inputs/textarea/textarea.html',
         'inputs/textarea/textarea.js'
     ], 'client');
-
-    api.export('mEditable');
 });

@@ -1,13 +1,13 @@
-mEditable.addType({
+sEditable.addType({
     type: 'textarea',
     classes: ['editable-pre-wrapped'],
-    template: Template.m_editable_form_textarea,
+    template: Template.s_editable_form_textarea,
     getVal: function ($inputWrapper) {
         return $inputWrapper.find('textarea').val();
     }
 });
 
-Template.m_editable_form_textarea.events({
+Template.s_editable_form_textarea.events({
     'keydown textarea': function (e) {
         if (e.ctrlKey && e.which === 13) {
             $(e.target).closest('form').submit();
