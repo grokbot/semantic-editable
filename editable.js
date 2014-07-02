@@ -1,4 +1,4 @@
-sEditable = {
+mEditable = {
     _types: new Meteor.Collection(null),
     getTemplate: function (type) {
         var t = this._types.findOne({_id: type });
@@ -56,7 +56,7 @@ s_editable.helpers({
     },
     'value':         function () { return valueToText(this.value, this.source) || this.emptyText; },
     'extraClasses': function () {
-        var type = sEditable._types.findOne({ _id: this.type });
+        var type = mEditable._types.findOne({ _id: this.type });
         if (type && type.classes) {
             return type.classes.join(' ');
         }
@@ -68,7 +68,7 @@ s_editable.helpers({
         }
         return !v.toString().trim() ? 'editable-empty' : '';
     },
-    'inputTemplate': function () { return sEditable.getTemplate(this.type); }
+    'inputTemplate': function () { return mEditable.getTemplate(this.type); }
 //     can't get tmpl in this context else I'd do this:
 //    'loading': function (a,b) {
 //        return tmpl.Session.get('loading');
@@ -82,7 +82,7 @@ s_editable.events({
     'submit': function (e, tmpl) {
         var self = this;
 
-        var val = sEditable.getVal(this.type)(tmpl.$('.editable-input'));
+        var val = mEditable.getVal(this.type)(tmpl.$('.editable-input'));
 
         if (typeof self.onsubmit === 'function') {
             if (self.async) {
@@ -183,7 +183,6 @@ s_editable.rendered = function () {
 };
 
 function resizePopover ($popover, placement) {
-    
 }
 
 Meteor.startup(function () {
@@ -223,7 +222,7 @@ function valueToText(val, source) {
 function generateSettings (settings) {
     if (POSSIBLE_POSITIONS.indexOf(settings.position) == -1)
         delete settings.position;
-    if (!sEditable._types.findOne({_id: settings.type }))
+    if (!mEditable._types.findOne({_id: settings.type }))
         delete settings.type;
 
     if (settings.source)
