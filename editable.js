@@ -1,4 +1,4 @@
-mEditable = {
+sEditable = {
     _types: new Meteor.Collection(null),
     getTemplate: function (type) {
         var t = this._types.findOne({_id: type });
@@ -39,7 +39,8 @@ Template.s_editable.helpers({ 'settings': function () { return generateSettings(
 
 s_editable.helpers({
     's_editable_template': function () {
-        return this.disabled ? this.disabledTemplate : this.template;
+        var template = typeof this.template === 'string' ? Template[this.template] : this.template;
+        return this.disabled ? this.disabledTemplate : template;
     },
     'displayVal': function () {
         var v = valueToText(this.value, this.source) || this.emptyText;
@@ -56,7 +57,7 @@ s_editable.helpers({
     },
     'value':         function () { return valueToText(this.value, this.source) || this.emptyText; },
     'extraClasses': function () {
-        var type = mEditable._types.findOne({ _id: this.type });
+        var type = sEditable._types.findOne({ _id: this.type });
         if (type && type.classes) {
             return type.classes.join(' ');
         }
@@ -68,7 +69,7 @@ s_editable.helpers({
         }
         return !v.toString().trim() ? 'editable-empty' : '';
     },
-    'inputTemplate': function () { return mEditable.getTemplate(this.type); }
+    'inputTemplate': function () { return sEditable.getTemplate(this.type); }
 //     can't get tmpl in this context else I'd do this:
 //    'loading': function (a,b) {
 //        return tmpl.Session.get('loading');
@@ -82,7 +83,7 @@ s_editable.events({
     'submit': function (e, tmpl) {
         var self = this;
 
-        var val = mEditable.getVal(this.type)(tmpl.$('.editable-input'));
+        var val = sEditable.getVal(this.type)(tmpl.$('.editable-input'));
 
         if (typeof self.onsubmit === 'function') {
             if (self.async) {
@@ -222,7 +223,7 @@ function valueToText(val, source) {
 function generateSettings (settings) {
     if (POSSIBLE_POSITIONS.indexOf(settings.position) == -1)
         delete settings.position;
-    if (!mEditable._types.findOne({_id: settings.type }))
+    if (!sEditable._types.findOne({_id: settings.type }))
         delete settings.type;
 
     if (settings.source)
