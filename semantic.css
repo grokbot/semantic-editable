@@ -1,3 +1,24 @@
 .ui.popup .editable-buttons .ui.button.icon {
 	width: inherit;
 }
+
+.ui.popup.left.center {
+	position: relative;
+	left:-100%;
+	top: -50%;
+}
+
+.ui.popup.top.center {
+	position: relative;
+	top:-100%;
+}
+
+.ui.popup.bottom.center {
+	position: relative;
+}
+
+.ui.popup.right.center {
+	position: relative;
+	top: -50%;
+	right: -100%;
+}
