@@ -5,27 +5,27 @@
 .ui.popup.left.center {
 	position: fixed;
 	top: 40%;
-	height: 60px;
+	height: auto;
 	width: 60%;
 }
 
 .ui.popup.top.center {
 	position: fixed;
 	top: 40%;
-	height: 60px;
+	height: auto;
 	width: 60%;
 }
 
 .ui.popup.bottom.center {
 	position: fixed;
 	top: 40%;
-	height: 60px;
+	height: auto;
 	width: 60%;
 }
 
 .ui.popup.right.center {
 	position: fixed;
 	top: 40%;
-	height: 60px;
+	height: auto;
 	width: 60%;
 }
