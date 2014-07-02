@@ -3,22 +3,29 @@
 }
 
 .ui.popup.left.center {
-	position: relative;
-	left:-100%;
-	top: -50%;
+	position: fixed;
+	top: 40%;
+	height: 60px;
+	width: 60%;
 }
 
 .ui.popup.top.center {
-	position: relative;
-	top:-100%;
+	position: fixed;
+	top: 40%;
+	height: 60px;
+	width: 60%;
 }
 
 .ui.popup.bottom.center {
-	position: relative;
+	position: fixed;
+	top: 40%;
+	height: 60px;
+	width: 60%;
 }
 
 .ui.popup.right.center {
-	position: relative;
-	top: -50%;
-	right: -100%;
+	position: fixed;
+	top: 40%;
+	height: 60px;
+	width: 60%;
 }
