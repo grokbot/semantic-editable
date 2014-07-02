@@ -30,6 +30,6 @@
 	width: 60%;
 }
 
-.ui.popup .ui.input {
+.ui.popup .ui.input, .ui.popup .ui.input textarea {
 	min-width: 60%;
 }
