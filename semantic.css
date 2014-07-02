@@ -29,3 +29,7 @@
 	height: auto;
 	width: 60%;
 }
+
+.ui.popup .ui.input {
+	min-width: 60%;
+}
