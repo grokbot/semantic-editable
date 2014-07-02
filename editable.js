@@ -174,7 +174,7 @@ s_editable.rendered = function () {
 
         if (visible) {
             $popover.trigger('show');
-            $popover.fadeIn();
+            $popover.popup('setting', 'position', settings.position + ' center');
             resizePopover($popover, self.data.position);
         } else {
             $popover.trigger('hide');
