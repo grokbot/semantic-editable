@@ -174,10 +174,11 @@ s_editable.rendered = function () {
 
         if (visible) {
             $popover.trigger('show');
+            $popover.addClass('visible');
             resizePopover($popover, self.data.position);
         } else {
             $popover.trigger('hide');
-            $popover.popup('hide');
+            $popover.removeClass('visible');
             $popover.fadeOut();
         }
     });
