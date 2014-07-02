@@ -173,6 +173,7 @@ s_editable.rendered = function () {
         }
 
         if (visible) {
+            console.log(self);
             $popover.trigger('show');
             $popover.popup('setting', 'position', settings.position + ' center');
             resizePopover($popover, self.data.position);
