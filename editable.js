@@ -27,8 +27,14 @@ sEditable = {
                 return typeof t === 'object';
             })
         });
+        
         // store only the template name
-        type.template = type.template.kind.replace(/^Template_/, '');
+        if (!type.template.kind) {
+            type.template = type.template.__templateName;
+        } else {
+            type.template = type.template.kind.replace(/^Template_/, '');
+        }
+
         return this._types.insert(type);
     }
 };
@@ -174,10 +180,11 @@ s_editable.rendered = function () {
 
         if (visible) {
             $popover.trigger('show');
-            $popover.fadeIn();
+            $popover.addClass('visible');
             resizePopover($popover, self.data.position);
         } else {
             $popover.trigger('hide');
+            $popover.removeClass('visible');
             $popover.fadeOut();
         }
     });

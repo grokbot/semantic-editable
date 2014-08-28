@@ -1,3 +1,38 @@
 .ui.popup .editable-buttons .ui.button.icon {
 	width: inherit;
+<<<<<<< HEAD
+=======
+}
+
+.ui.popup.left.center {
+	position: fixed;
+	top: 40%;
+	height: auto;
+	width: 60%;
+}
+
+.ui.popup.top.center {
+	position: fixed;
+	top: 40%;
+	height: auto;
+	width: 60%;
+}
+
+.ui.popup.bottom.center {
+	position: fixed;
+	top: 40%;
+	height: auto;
+	width: 60%;
+}
+
+.ui.popup.right.center {
+	position: fixed;
+	top: 40%;
+	height: auto;
+	width: 60%;
+}
+
+.ui.popup .ui.input, .ui.popup .ui.input textarea {
+	min-width: 60%;
+>>>>>>> dev
 }
