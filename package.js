@@ -38,9 +38,6 @@ Package.on_use(function (api) {
         'inputs/select/select.html',
         'inputs/select/select.js',
 
-        'inputs/select2/select2.html',
-        'inputs/select2/select2.js',
-
         'inputs/date/date.html',
         'inputs/date/date.js',
 
