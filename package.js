@@ -14,13 +14,8 @@ Package.on_use(function (api) {
 
     // libs
     api.add_files([
-        'lib/select2/select2.js',
-        'lib/select2/select2.png',
-        'lib/select2/select2.css',
-
         'lib/bootstrap-datetimepicker/bootstrap-datetimepicker.css',
         'lib/bootstrap-datetimepicker/bootstrap-datetimepicker.js',
-
         'lib/combodate/combodate.js'
     ], 'client');
 
